@@ -1,0 +1,382 @@
+local buttonNames = {"Elerium", "Fluent", "Speed", "Galaxy"}
+local scripts = {
+    [1] = [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sherya-Script-Private/Muscle-legends/refs/heads/main/Elerium%20V2"))()("Sherya Scripts: Script 1 ejecutado")
+    ]],
+    [2] = [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sherya-Script-Private/Muscle-legends/refs/heads/main/Fluent"))()("Sherya Scripts: Script 2 ejecutado")
+    ]],
+    [3] = [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sherya-Script-Private/Muscle-legends/refs/heads/main/Dr-Ray"))()("Sherya Scripts: Script 3 ejecutado")
+    ]],
+    [4] = [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sherya-Script-Private/Muscle-legends/refs/heads/main/Sherya%20GUI"))()("Sherya Scripts: Script 4 ejecutado")
+    ]],
+}
+
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SheryaScriptsUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game:GetService("CoreGui")
+
+local BlurFrame = Instance.new("Frame")
+BlurFrame.Parent = ScreenGui
+BlurFrame.Size = UDim2.new(1, 0, 1, 0)
+BlurFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+BlurFrame.BackgroundTransparency = 0.3
+BlurFrame.BorderSizePixel = 0
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Parent = ScreenGui
+MainFrame.Name = "MainFrame"
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 400, 0, 320)
+MainFrame.BackgroundColor3 = Color3.fromRGB(138, 43, 226) -- morado fuerte
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.Parent = MainFrame
+MainCorner.CornerRadius = UDim.new(0, 25)
+
+local PurpleGradient = Instance.new("Frame")
+PurpleGradient.Parent = MainFrame
+PurpleGradient.Size = UDim2.new(1, 0, 1, 0)
+PurpleGradient.BackgroundTransparency = 0
+PurpleGradient.BorderSizePixel = 0
+
+local PurpleGradientCorner = Instance.new("UICorner")
+PurpleGradientCorner.Parent = PurpleGradient
+PurpleGradientCorner.CornerRadius = UDim.new(0, 25)
+
+local PurpleUIGradient = Instance.new("UIGradient")
+PurpleUIGradient.Parent = PurpleGradient
+PurpleUIGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(75, 0, 130)),     -- morado oscuro
+    ColorSequenceKeypoint.new(0.3, Color3.fromRGB(138, 43, 226)), -- morado fuerte
+    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(186, 85, 211)), -- morado bajito
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(138, 43, 226))    -- morado fuerte
+}
+PurpleUIGradient.Rotation = 135
+
+local GlowStroke = Instance.new("UIStroke")
+GlowStroke.Parent = MainFrame
+GlowStroke.Color = Color3.fromRGB(138, 43, 226)
+GlowStroke.Thickness = 3
+GlowStroke.Transparency = 0.3
+
+local glowAnimation = TweenService:Create(GlowStroke, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+    Transparency = 0.8,
+    Thickness = 2
+})
+glowAnimation:Play()
+
+local function createSparkle(parent, x, y)
+    local sparkle = Instance.new("TextLabel")
+    sparkle.Parent = parent
+    sparkle.Size = UDim2.new(0, 20, 0, 20)
+    sparkle.Position = UDim2.new(x, 0, y, 0)
+    sparkle.BackgroundTransparency = 1
+    sparkle.Text = "🟣"
+    sparkle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sparkle.TextSize = 16
+    sparkle.Font = Enum.Font.Gotham
+    sparkle.TextTransparency = 0.3
+
+    local sparkleAnim = TweenService:Create(sparkle, TweenInfo.new(3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+        TextTransparency = 0.9,
+        Rotation = 180
+    })
+    sparkleAnim:Play()
+end
+
+createSparkle(MainFrame, 0.05, 0.1)
+createSparkle(MainFrame, 0.9, 0.15)
+createSparkle(MainFrame, 0.1, 0.85)
+createSparkle(MainFrame, 0.85, 0.8)
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Parent = MainFrame
+CloseBtn.Size = UDim2.new(0, 35, 0, 35)
+CloseBtn.Position = UDim2.new(1, -45, 0, 10)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(138, 43, 226)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 20
+CloseBtn.BorderSizePixel = 0
+CloseBtn.BackgroundTransparency = 0.1
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.Parent = CloseBtn
+CloseCorner.CornerRadius = UDim.new(0, 17)
+
+local CloseStroke = Instance.new("UIStroke")
+CloseStroke.Parent = CloseBtn
+CloseStroke.Color = Color3.fromRGB(138, 43, 226)
+CloseStroke.Thickness = 2
+CloseStroke.Transparency = 0.5
+
+local Title = Instance.new("TextLabel")
+Title.Parent = MainFrame
+Title.Size = UDim2.new(1, 0, 0, 70)
+Title.Position = UDim2.new(0, 0, 0, 10)
+Title.BackgroundTransparency = 1
+Title.Text = " Galaxy XVI "
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 28
+Title.TextYAlignment = Enum.TextYAlignment.Center
+Title.TextStrokeTransparency = 0.5
+Title.TextStrokeColor3 = Color3.fromRGB(75, 0, 130)
+
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Parent = MainFrame
+Subtitle.Size = UDim2.new(1, 0, 0, 25)
+Subtitle.Position = UDim2.new(0, 0, 0, 65)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "✨ Elige tu script favorito ✨"
+Subtitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+Subtitle.Font = Enum.Font.GothamSemibold
+Subtitle.TextSize = 16
+Subtitle.TextYAlignment = Enum.TextYAlignment.Center
+Subtitle.TextTransparency = 0.2
+
+local GridFrame = Instance.new("Frame")
+GridFrame.Parent = MainFrame
+GridFrame.Position = UDim2.new(0, 30, 0, 110)
+GridFrame.Size = UDim2.new(1, -60, 1, -130)
+GridFrame.BackgroundTransparency = 1
+
+local UIGridLayout = Instance.new("UIGridLayout")
+UIGridLayout.Parent = GridFrame
+UIGridLayout.CellSize = UDim2.new(0, 160, 0, 55)
+UIGridLayout.CellPadding = UDim2.new(0, 20, 0, 20)
+UIGridLayout.FillDirectionMaxCells = 2
+UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIGridLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+
+local hoverTweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local clickTweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Back, Enum.EasingDirection.InOut)
+
+for i = 1, 4 do
+    local btn = Instance.new("TextButton")
+    btn.Name = "ScriptBtn"..i
+    btn.Parent = GridFrame
+    btn.Text = " " .. buttonNames[i] .. " "
+    btn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    btn.TextColor3 = Color3.fromRGB(138, 43, 226)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 18
+    btn.BorderSizePixel = 0
+    btn.AutoButtonColor = false
+    btn.LayoutOrder = i
+    btn.BackgroundTransparency = 0.1
+
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.Parent = btn
+    btnCorner.CornerRadius = UDim.new(0, 15)
+
+    local btnGradient = Instance.new("Frame")
+    btnGradient.Parent = btn
+    btnGradient.Size = UDim2.new(1, 0, 1, 0)
+    btnGradient.BackgroundTransparency = 0.7
+    btnGradient.BorderSizePixel = 0
+    btnGradient.ZIndex = btn.ZIndex - 1
+
+    local btnGradientCorner = Instance.new("UICorner")
+    btnGradientCorner.Parent = btnGradient
+    btnGradientCorner.CornerRadius = UDim.new(0, 15)
+
+    local btnUIGradient = Instance.new("UIGradient")
+    btnUIGradient.Parent = btnGradient
+    btnUIGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(75, 0, 130)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(138, 43, 226)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(186, 85, 211))
+    }
+    btnUIGradient.Rotation = 45
+
+    local btnStroke = Instance.new("UIStroke")
+    btnStroke.Parent = btn
+    btnStroke.Thickness = 2
+    btnStroke.Color = Color3.fromRGB(138, 43, 226)
+    btnStroke.Transparency = 0.4
+
+    btn.MouseEnter:Connect(function()
+        local hoverTween = TweenService:Create(btn, hoverTweenInfo, {
+            BackgroundColor3 = Color3.fromRGB(186, 85, 211),
+            Size = UDim2.new(0, 170, 0, 60)
+        })
+        local strokeTween = TweenService:Create(btnStroke, hoverTweenInfo, {
+            Transparency = 0.1,
+            Thickness = 3,
+            Color = Color3.fromRGB(138, 43, 226)
+        })
+        local gradientTween = TweenService:Create(btnGradient, hoverTweenInfo, {
+            BackgroundTransparency = 0.3
+        })
+        local textTween = TweenService:Create(btn, hoverTweenInfo, {
+            TextSize = 20
+        })
+
+        hoverTween:Play()
+        strokeTween:Play()
+        gradientTween:Play()
+        textTween:Play()
+    end)
+
+    btn.MouseLeave:Connect(function()
+        local leaveTween = TweenService:Create(btn, hoverTweenInfo, {
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            Size = UDim2.new(0, 160, 0, 55)
+        })
+        local strokeTween = TweenService:Create(btnStroke, hoverTweenInfo, {
+            Transparency = 0.4,
+            Thickness = 2,
+            Color = Color3.fromRGB(138, 43, 226)
+        })
+        local gradientTween = TweenService:Create(btnGradient, hoverTweenInfo, {
+            BackgroundTransparency = 0.7
+        })
+        local textTween = TweenService:Create(btn, hoverTweenInfo, {
+            TextSize = 18
+        })
+
+        leaveTween:Play()
+        strokeTween:Play()
+        gradientTween:Play()
+        textTween:Play()
+    end)
+
+    btn.MouseButton1Click:Connect(function()
+        local clickDownTween = TweenService:Create(btn, clickTweenInfo, {
+            Size = UDim2.new(0, 150, 0, 50),
+            BackgroundTransparency = 0.3
+        })
+        clickDownTween:Play()
+
+        clickDownTween.Completed:Connect(function()
+            local clickUpTween = TweenService:Create(btn, clickTweenInfo, {
+                Size = UDim2.new(0, 160, 0, 55),
+                BackgroundTransparency = 0.1
+            })
+            clickUpTween:Play()
+        end)
+
+        local successLabel = Instance.new("TextLabel")
+        successLabel.Parent = MainFrame
+        successLabel.Size = UDim2.new(1, 0, 0, 30)
+        successLabel.Position = UDim2.new(0, 0, 0, 85)
+        successLabel.BackgroundTransparency = 1
+        successLabel.Text = "¡Ejecutando " .. buttonNames[i] .. "! 💜"
+        successLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        successLabel.Font = Enum.Font.GothamBold
+        successLabel.TextSize = 16
+        successLabel.TextTransparency = 1
+
+        local successTween = TweenService:Create(successLabel, TweenInfo.new(0.5), {
+            TextTransparency = 0
+        })
+        successTween:Play()
+
+        wait(0.8)
+
+        local fadeOutTween = TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, 350, 0, 270),
+            BackgroundTransparency = 1
+        })
+
+        local blurFadeTween = TweenService:Create(BlurFrame, TweenInfo.new(0.5), {
+            BackgroundTransparency = 1
+        })
+
+        fadeOutTween:Play()
+        blurFadeTween:Play()
+
+        local titleFadeTween = TweenService:Create(Title, TweenInfo.new(0.5), {TextTransparency = 1})
+        local subtitleFadeTween = TweenService:Create(Subtitle, TweenInfo.new(0.5), {TextTransparency = 1})
+
+        titleFadeTween:Play()
+        subtitleFadeTween:Play()
+
+        for _, child in pairs(GridFrame:GetChildren()) do
+            if child:IsA("TextButton") then
+                local btnFadeTween = TweenService:Create(child, TweenInfo.new(0.5), {
+                    BackgroundTransparency = 1,
+                    TextTransparency = 1
+                })
+                btnFadeTween:Play()
+            end
+        end
+
+        fadeOutTween.Completed:Connect(function()
+            ScreenGui:Destroy()
+            local scriptToRun = scripts[i]
+            if scriptToRun then
+                loadstring(scriptToRun)()
+            end
+        end)
+    end)
+end
+
+CloseBtn.MouseEnter:Connect(function()
+    local hoverTween = TweenService:Create(CloseBtn, hoverTweenInfo, {
+        BackgroundColor3 = Color3.fromRGB(138, 43, 226),
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Size = UDim2.new(0, 40, 0, 40)
+    })
+    hoverTween:Play()
+end)
+
+CloseBtn.MouseLeave:Connect(function()
+    local leaveTween = TweenService:Create(CloseBtn, hoverTweenInfo, {
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        TextColor3 = Color3.fromRGB(138, 43, 226),
+        Size = UDim2.new(0, 35, 0, 35)
+    })
+    leaveTween:Play()
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    local closeTween = TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+        Size = UDim2.new(0, 0, 0, 0),
+        Rotation = 90,
+        BackgroundTransparency = 1
+    })
+    local blurCloseTween = TweenService:Create(BlurFrame, TweenInfo.new(0.4), {
+        BackgroundTransparency = 1
+    })
+
+    closeTween:Play()
+    blurCloseTween:Play()
+
+    closeTween.Completed:Connect(function()
+        ScreenGui:Destroy()
+    end)
+end)
+
+MainFrame.Size = UDim2.new(0, 0, 0, 0)
+MainFrame.BackgroundTransparency = 1
+MainFrame.Rotation = -45
+BlurFrame.BackgroundTransparency = 1
+
+local entranceTween = TweenService:Create(MainFrame, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Size = UDim2.new(0, 400, 0, 320),
+    BackgroundTransparency = 0,
+    Rotation = 0
+})
+
+local blurEntranceTween = TweenService:Create(BlurFrame, TweenInfo.new(0.6), {
+    BackgroundTransparency = 0.3
+})
+
+entranceTween:Play()
+blurEntranceTween:Play()
+
+ScreenGui.IgnoreGuiInset = true
